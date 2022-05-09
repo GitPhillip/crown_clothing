@@ -1,33 +1,15 @@
-
-import { useEffect } from "react";
-
 import { 
-    auth,
     signInWithGooglePopup, 
-    signInWithGoogleRedirect,
     createUserDocumentFromAuth  
-} from "../../utils/firebase.utils";
+} from "../../utils/firebase/firebase.utils";
 
-import { getRedirectResult } from "firebase/auth";
-
+import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
 
 const SignIn = () =>{
 
-    //--------------On Mount--------------------
-    useEffect(() => {
-        async function getResults(){
-            const response  = await getRedirectResult(auth); //can view auth as authentication memory our app is tracking regardless of where website is going.
-            if(response)
-            {
-                const {userDocRef} = await createUserDocumentFromAuth(response.user);
-            }
-        }
-        getResults();
-    },[]);
-    //--------------On Mount--------------------
-
     const logGoogleUser = async () =>{
         const {user} = await signInWithGooglePopup();
+
         const {userDocRef} = await createUserDocumentFromAuth(user);
     }
 
@@ -37,9 +19,7 @@ const SignIn = () =>{
             <button onClick={logGoogleUser}>
                 Sign in with Google Popup
             </button>
-            <button onClick={signInWithGoogleRedirect}>
-                Sign in with Google Redirect
-            </button>
+            <SignUpForm/>
         </div>
     )
 } 
