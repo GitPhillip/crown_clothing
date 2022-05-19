@@ -11,6 +11,7 @@ import {
     createUserDocumentFromAuth
 } from '../../utils/firebase/firebase.utils';
 
+//Form fields
 const  defaultFormFields = {
     name: '',
     email: '',
@@ -45,7 +46,8 @@ const SignUpForm = () =>{
             alert('success');
             resetFormFields();
         }catch(error){
-            console.log(error);
+            if(error.code === 'auth/email-already-in-use') alert('Email is already in use');
+            else console.log(error);
         }
         
     }
@@ -56,7 +58,7 @@ const SignUpForm = () =>{
             <span>Sign up with email & password</span>
             <form onSubmit={SubmitForm}>
                 <FormInput label='Name' required onChange={onChangeHandler} name='name' value={name} type='text'/>
-                <FormInput label='Email' required onChange={onChangeHandler} name='email' value={email} type='password'/>
+                <FormInput label='Email' required onChange={onChangeHandler} name='email' value={email} type='text'/>
                 <FormInput label='Password' required onChange={onChangeHandler} name='password' value={password} type='password'/>
                 <FormInput label='Confirm Password' required onChange={onChangeHandler} name='confirmPassword' value={confirmPassword} type='password'/>
                 <Button type='submit'>Sign Up</Button>
