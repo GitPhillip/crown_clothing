@@ -16,7 +16,7 @@ export const UserProvider = ({children}) =>{
     //on mount
     useEffect(()=>{
         //must stop listening if the component unmounts
-        const unsubscribe = onAuthStateChangedListener((user)=>{
+        const unsubscribe = onAuthStateChangedListener( (user)=>{
             if(user) createUserDocumentFromAuth(user); //create the user document if it is being passed through
             
             setCurrentUser(user); //set the user
