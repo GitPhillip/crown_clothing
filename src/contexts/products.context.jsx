@@ -11,7 +11,7 @@ export const ProductsContext = createContext({
 //the provider is the actual component (functional)
 export const ProductsProvider = ({children}) =>{
 
-    const [products, setProducts] = useState([]); //we want to store a user object
+    const [products, setProducts] = useState([]); //we want to store a products array
     const value = {products, setProducts}; //we want the child components (all) to be able to access the 2
     
     //on mount
