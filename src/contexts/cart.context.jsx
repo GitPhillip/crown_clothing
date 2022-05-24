@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 //helper function to help find the existing product
 const addCartItem = (cartItems, productToAdd) =>{
@@ -24,7 +24,8 @@ export const CartContext = createContext({
     isCartOpen: false,
     setIsCartOpen: () => {},
     cartItems: [],
-    addItemToCart: () => {}
+    addItemToCart: () => {},
+    cartQuantity: 0
 });
 
 //the provider is the actual component (functional) | For index.js
@@ -32,12 +33,21 @@ export const CartProvider = ({children}) =>{
 
     const [isCartOpen, setIsCartOpen] = useState(false); //we want to store a cart array
     const [cartItems, setCartItems] = useState([]);
+    const [cartQuantity, setCartQuantity] = useState(0);
+
+    useEffect(()=>{
+        const totalQuantities = cartItems.reduce((total, cartItem)=>{
+            return total += cartItem.quantity;
+        }, 0); //zero is the initial value
+        setCartQuantity(totalQuantities);//set the state
+    },[cartItems]);
 
     //function to add the product to the cart
     const addItemToCart = (productToAdd) =>{
         setCartItems(addCartItem(cartItems,productToAdd));
     }
-    const value = {isCartOpen, setIsCartOpen, addItemToCart, cartItems}; //we want the child components (all) to be able to access the 2
+
+    const value = {isCartOpen, setIsCartOpen, addItemToCart, cartItems, cartQuantity}; //we want the child components (all) to be able to access the 2
 
     return (
         <CartContext.Provider value={value}>{children}</CartContext.Provider>

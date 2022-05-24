@@ -1,14 +1,19 @@
 
-import './cart-items.styles.scss';
+import './cart-item.styles.scss';
 
 const CartItem = ({ cartItem }) =>{
 
-    const {name, quantity} = cartItem; //destructure the cartItem properties
+    const {name, imageUrl, price, quantity} = cartItem; //destructure the cartItem properties
     
     return(
         <div className='cart-item-container'>
-            <h2>{name}</h2>
-            <span>{quantity}</span>
+            <img alt={`${name}`} src={imageUrl} />
+            <div className='item-details'>
+                <span className='name'>{name}</span>
+                <span className='price'>
+                    {quantity} x R{price}
+                </span>
+            </div>
         </div>
     )
 }
