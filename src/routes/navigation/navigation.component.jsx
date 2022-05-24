@@ -44,7 +44,7 @@ const Navigation = () =>{
                 isCartOpen && <CartDropdown />
             }
         </div>
-        <Outlet/>
+        <Outlet/> {/*everything else must be at the bottom */}
       </>
     );
 }
