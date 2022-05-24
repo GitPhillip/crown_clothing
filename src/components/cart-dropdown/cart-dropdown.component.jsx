@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { CartContext } from '../../contexts/cart.context';
 
@@ -12,6 +12,13 @@ const CartDropdown = () =>{
 
     const { cartItems } = useContext(CartContext);//get your persisting state
 
+    //useNavigate is a hook that allows us to get a navigateFunction
+    const navigate = useNavigate();
+
+    const checkoutHandler = ( ) =>{
+        navigate('/checkout');
+    } 
+    
     return(
         <div className='cart-dropdown-container'>
             <div className='cart-items'>
@@ -19,9 +26,7 @@ const CartDropdown = () =>{
                 <CartItem key={item.id} cartItem={item} />
             ))}
             </div>
-            <Link className="nav-link" to="/checkout">
-                <Button>Checkout</Button>
-            </Link>
+            <Button onClick={checkoutHandler}>Checkout</Button>
         </div>
     )
 }
