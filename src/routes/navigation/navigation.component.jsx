@@ -18,6 +18,7 @@ const Navigation = () =>{
     const {currentUser} = useContext(UserContext); // get the current user from the context
     const {isCartOpen} = useContext(CartContext);
 
+    console.log(currentUser)
     return (
       <>
         <div className='navigation'>
@@ -25,6 +26,11 @@ const Navigation = () =>{
                 <CrownLogo className="logo" />
             </Link>
             <div className="nav-links-container">
+                <span className="user-email">
+                    {
+                        currentUser ? currentUser.email:''
+                    }
+                </span>
                 <Link className="nav-link" to="/shop">
                     Shop
                 </Link>
