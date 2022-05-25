@@ -12,7 +12,17 @@ import {
     signOut,
     onAuthStateChanged
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+
+import { 
+    getFirestore,
+    doc, 
+    getDoc, 
+    setDoc,
+    collection, //allows us to get a collection reference just like getting a document reference
+    writeBatch, //allows all objects that we want to add to the collection are successfully added
+    query,
+    getDocs
+} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -39,6 +49,45 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+
+//function to add collection and documents to firebase database
+export const addColletionAndDocuments = async (collectioKey, objectsToAdd) =>{
+    
+    const collectionRef = collection(db, collectioKey);//create your collection
+
+    //need to store each of the objects as a document in this particular collection
+    const batch = writeBatch(db);//cretate the batch and pass in sb instance
+
+    //loop through all objects and add them to the batch
+    objectsToAdd.forEach(object =>{
+        const docRef = doc(collectionRef, object.title.toLowerCase());//this is the instance of the document
+        batch.set(docRef, object);//add the object to the document ref
+
+    });
+
+    await batch.commit(); //will begin firing
+    console.log('done');
+}
+
+//function to get the categories and documents
+export const getCategoriesAndDocuments = async () =>{
+
+    const collectionRef = collection(db, 'categories'); //get the collection instance
+
+    const q = query(collectionRef); //will give you an object where you can get a snapshot from
+
+    const querySnapshot = await getDocs(q);//fetch the document snapshots we want
+
+    //we now have acess to all the documents inside our collection as well as the snapshots (data) in the documents
+    const categoryMap = querySnapshot.docs.reduce( (accumulator, docSnapshot)=>{
+        const { title, items } = docSnapshot.data();//destructure
+        accumulator[title.toLowerCase()] = items; //set the items value to be paired with the key of 'titles'
+        return accumulator;
+    },{});
+
+    return categoryMap;
+    
+}
 
 //Function to create a user document
 export const createUserDocumentFromAuth = async(userAuth, additionalInformation={}) =>{
