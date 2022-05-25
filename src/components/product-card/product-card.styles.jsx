@@ -39,21 +39,12 @@ button {
 `;
 
 export const Footer = styled.div`
-.footer {
   width: 100%;
   height: 5%;
   display: flex;
   justify-content: space-between;
   font-size: 18px;
 
-  .name {
-    
-  }
-
-  .price {
-    width: 10%;
-  }
-}
 `;
 
 export const Name = styled.span`
