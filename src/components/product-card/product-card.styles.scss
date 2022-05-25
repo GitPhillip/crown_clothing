@@ -7,6 +7,7 @@
   position: relative;
 
   img {
+    min-width: 95px;
     width: 100%;
     height: 95%;
     object-fit: cover;
@@ -14,7 +15,8 @@
   }
 
   button {
-    width: 80%;
+    min-width: 50px;
+    width: auto;
     opacity: 0.7;
     position: absolute;
     top: 255px;
