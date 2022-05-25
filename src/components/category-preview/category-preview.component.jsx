@@ -1,19 +1,18 @@
-import { Link } from "react-router-dom";
-
 import ProductCard from '../product-card/product-card-component';
 
-import './category-preview.styles.scss';
+import {CategoryPreviewContainer,Title,Preview } from './category-preview.styles.jsx';
+import { NavLink } from '../../routes/navigation/navigation.styles';
 
 const CategoryPreview = ({ title, products }) =>{
 
     return(
-        <div className='category-preview-container'>
+        <CategoryPreviewContainer>
             <h2>
-                <Link className="nav-link" to={title}>
-                    <span className='title'>{title.toUpperCase()}</span>
-                </Link>
+                <NavLink to={title}>
+                    <Title>{title.toUpperCase()}</Title>
+                </NavLink>
             </h2>
-            <div className='preview'>
+            <Preview>
             {
                 products
                 .filter( (_, index) => index<4)//with _ we don't want the instance
@@ -21,8 +20,8 @@ const CategoryPreview = ({ title, products }) =>{
                     product => (<ProductCard key={product.id} product={product}/>)
                 )                
             }
-            </div>
-        </div>
+            </Preview>
+        </CategoryPreviewContainer>
     );
 }
 export default CategoryPreview;

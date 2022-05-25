@@ -1,20 +1,20 @@
 
-import './cart-item.styles.scss';
+import {CartItemContainer, Image, ItemDetails, Name } from './cart-item.styles';
 
 const CartItem = ({ cartItem }) =>{
 
     const {name, imageUrl, price, quantity} = cartItem; //destructure the cartItem properties
     
     return(
-        <div className='cart-item-container'>
-            <img alt={`${name}`} src={imageUrl} />
-            <div className='item-details'>
-                <span className='name'>{name}</span>
+        <CartItemContainer>
+            <Image alt={`${name}`} src={imageUrl} />
+            <ItemDetails>
+                <Name className='name'>{name}</Name>
                 <span className='price'>
                     {quantity} x R{price}
                 </span>
-            </div>
-        </div>
+            </ItemDetails>
+        </CartItemContainer>
     )
 }
 export default CartItem;
